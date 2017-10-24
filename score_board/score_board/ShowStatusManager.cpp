@@ -10,5 +10,5 @@ ShowStatusManager::~ShowStatusManager() {
 
 
 std::string ShowStatusManager::getStatus() {
-	return "home";
+	return "nnn";
 }

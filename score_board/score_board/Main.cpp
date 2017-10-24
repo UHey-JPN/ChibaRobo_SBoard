@@ -1,12 +1,17 @@
 ﻿#include <string>
+#include <memory>
+
 #include <Siv3D.hpp>
 
 #include "DrawManager.h"
 #include "ShowStatusManager.h"
 
+
+
+
 void Main()
 {
-	ShowStatusManager showStatusManager;
+	std::shared_ptr<ShowStatusManager> showStatusManager(new ShowStatusManager);
 	DrawManager drawManager(showStatusManager);
 
 	// ウィンドウサイズを可変に
