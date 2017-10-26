@@ -15,6 +15,14 @@ long long int ShowStatusManager::getStartTime() {
 	return startTime;
 }
 
+long long int ShowStatusManager::getCurrentTime() {
+	return (long long int)(Time::MillisecSince1601() - WINUTC_2_EPOC);
+}
+
+long long int ShowStatusManager::getShowTime() {
+	return getCurrentTime() - getStartTime();
+}
+
 void ShowStatusManager::update() {
 	while (1) {
 		std::string line;
@@ -52,4 +60,16 @@ void ShowStatusManager::update() {
 
 
 	}
+}
+
+std::vector<std::string> ShowStatusManager::split(std::string str) {
+	std::vector<std::string> ret;
+	std::string item;
+
+	std::stringstream ss(str);
+
+	while (std::getline(ss, item, ',')) {
+		ret.push_back(item);
+	}
+	return ret;
 }
