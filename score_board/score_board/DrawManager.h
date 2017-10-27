@@ -28,6 +28,8 @@ private:
 	std::shared_ptr<ShowStatusManager> current;
 	std::map<std::string, std::function<void()> > m_funcs;
 
+	std::unique_ptr<Texture> home_image;
+
 public:
 	DrawManagerImpl(std::shared_ptr<ShowStatusManager> ssm);
 

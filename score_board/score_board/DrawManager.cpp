@@ -21,10 +21,13 @@ void DrawManager::draw() {
 DrawManager::DrawManagerImpl::DrawManagerImpl(std::shared_ptr<ShowStatusManager> ssm) {
 	current = ssm;
 	m_funcs["home"] = [&]() {this->drawHome(); };
+	m_funcs["opening"] = [&]() {this->drawHome(); };
 	m_funcs["home"] = [&]() {this->drawHome(); };
 	m_funcs["home"] = [&]() {this->drawHome(); };
 	m_funcs["home"] = [&]() {this->drawHome(); };
-	m_funcs["home"] = [&]() {this->drawHome(); };
+
+	home_image.reset(new Texture(L"resource/home.png"));
+
 }
 
 void DrawManager::DrawManagerImpl::draw(std::string key) {
@@ -45,10 +48,7 @@ void DrawManager::DrawManagerImpl::drawError() {
 
 }
 
-void  DrawManager::DrawManagerImpl::drawHome(void) {
+void DrawManager::DrawManagerImpl::drawHome(void) {
 	static const Font font(30);
-	font(L"mode = home").draw();
-
-	Circle(Mouse::Pos(), 50).draw({ 255, 0, 0, 127 });
-
+	home_image->resize(Window::Width(), Window::Height()).draw();
 }
