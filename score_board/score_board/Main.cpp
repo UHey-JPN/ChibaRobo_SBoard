@@ -21,7 +21,8 @@ void Main() {
 	DrawManager drawManager(ssm);
 	WindowInfo windowInfomation;
 
-
+	// デバッグ用のウィンドウ生成
+	Console::Open();
 
 	while (System::Update()) {
 		if (Input::KeyH.clicked) {
@@ -40,6 +41,12 @@ void Main() {
 			ssm->ld.input(std::string("show,game,") + std::to_string(ssm->getCurrentTime() - 500) + std::string(",0,0\n"));
 		}
 
+
+
+
+		// ------------------------------------------
+		// 描画関係のメソッド
+		// 順番には注意が必要。下のレイヤーから順に呼び出す。
 		draw_status_info(ssm);
 		drawManager.draw();
 		windowInfomation.update();
@@ -49,10 +56,13 @@ void Main() {
 
 void draw_status_info(std::shared_ptr<ShowStatusManager> ssm) {
 	static const Font font(10);
-	const String text = Widen(ssm->getStatus() + "," + std::to_string(ssm->getShowTime()));
-	const int32 w = font(text).region().w;
-	const int32 h = font(text).region().h;
-	font(text).draw(Window::Width() - w, Window::Height() - h);
+	const std::string text = ssm->getStatus() + ","
+		+ std::to_string(ssm->getShowTime()) + ","
+		+ std::to_string(ssm->getScore(0)) + "-" + std::to_string(ssm->getScore(1));
+	const String w_text = Widen(text);
+	const int32 w = font(w_text).region().w;
+	const int32 h = font(w_text).region().h;
+	font(w_text).draw(Window::Width() - w, Window::Height() - h);
 
 }
 

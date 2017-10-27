@@ -44,7 +44,7 @@ void DrawManager::DrawManagerImpl::drawError() {
 	const String text = L"err";
 	const int32 w = font(text).region().w;
 	const int32 h = font(text).region().h;
-	font(text).draw(Window::Width()-w, Window::Height()-h);
+	font(text).draw(Window::Width()-w, Window::Height()-h*2);
 
 }
 

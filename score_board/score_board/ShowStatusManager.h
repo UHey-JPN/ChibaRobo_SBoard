@@ -16,17 +16,20 @@ public:
 private:
 	long long int startTime = 0;
 	std::string mode;
-	int socre[2] = { 0 };
+	int score[2] = { 0 };
+	PipeServer udp_exe;
 
 public:
 	LineDecoder ld;
 
 public:
 	ShowStatusManager();
+	~ShowStatusManager();
 	std::string getStatus();
 	long long int getStartTime();
 	long long int getCurrentTime();
 	long long int getShowTime();
+	int getScore(int side);
 
 private:
 	void update();
