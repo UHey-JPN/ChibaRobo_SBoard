@@ -34,6 +34,17 @@ void Main() {
 	if(launch_console) Console::Open();
 
 	while (System::Update()) {
+		if (Input::KeyG.clicked) {
+			ssm->ld.input(std::string("show,game,") + std::to_string(ssm->getCurrentTime() - 175 * 1000) + std::string(",0,0\n"));
+		}
+		if (Input::KeyR.clicked) {
+			ssm->ld.input(std::string("show,result,") + std::to_string(ssm->getCurrentTime() - 500) + std::string(",0,0\n"));
+		}
+		if (Input::KeyV.clicked) {
+			ssm->ld.input(std::string("show,vgoal,") + std::to_string(ssm->getCurrentTime() - 500) + std::string(",0,0\n"));
+		}
+
+
 		// ------------------------------------------
 		// 描画関係のメソッド
 		// 順番には注意が必要。下のレイヤーから順に呼び出す。
