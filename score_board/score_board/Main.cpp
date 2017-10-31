@@ -1,13 +1,20 @@
-﻿#include <string>
-#include <memory>
-
+﻿
 #include <Siv3D.hpp>
+
+#include <string>
+#include <sstream>
+#include <fstream>
+#include <memory>
 
 #include "DrawManager.h"
 #include "ShowStatusManager.h"
 #include "WindowInfo.h"
 
 void draw_status_info(std::shared_ptr<ShowStatusManager> ssm);
+void check_setting();
+
+bool launch_console = false;
+bool draw_show_info = false;
 
 //////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////
@@ -21,49 +28,50 @@ void Main() {
 	DrawManager drawManager(ssm);
 	WindowInfo windowInfomation;
 
+	check_setting();
+
 	// デバッグ用のウィンドウ生成
-	Console::Open();
+	if(launch_console) Console::Open();
 
 	while (System::Update()) {
-		if (Input::KeyH.clicked) {
-			ssm->ld.input(std::string("show,home,") + std::to_string(ssm->getCurrentTime() - 500) + std::string(",0,0\n"));
-		}
-		if (Input::KeyO.clicked) {
-			ssm->ld.input(std::string("show,opening,") + std::to_string(ssm->getCurrentTime() - 500) + std::string(",0,0\n"));
-		}
-		if (Input::KeyG.clicked) {
-			ssm->ld.input(std::string("show,game,") + std::to_string(ssm->getCurrentTime() - 500) + std::string(",0,0\n"));
-		}
-		if (Input::Key1.clicked) {
-			ssm->ld.input(std::string("show,game,") + std::to_string(ssm->getCurrentTime() - 500) + std::string(",1,5\n"));
-		}
-		if (Input::Key2.clicked) {
-			ssm->ld.input(std::string("show,game,") + std::to_string(ssm->getCurrentTime() - 500) + std::string(",0,0\n"));
-		}
-
-
-
-
 		// ------------------------------------------
 		// 描画関係のメソッド
 		// 順番には注意が必要。下のレイヤーから順に呼び出す。
-		draw_status_info(ssm);
 		drawManager.draw();
 		windowInfomation.update();
+		if (draw_show_info) draw_status_info(ssm);
 	}
 }
 
 
 void draw_status_info(std::shared_ptr<ShowStatusManager> ssm) {
-	static const Font font(10);
+	static Font status_font(10, Typeface::Medium, FontStyle::Outline);
 	const std::string text = ssm->getStatus() + ","
 		+ std::to_string(ssm->getShowTime()) + ","
 		+ std::to_string(ssm->getScore(0)) + "-" + std::to_string(ssm->getScore(1));
 	const String w_text = Widen(text);
-	const int32 w = font(w_text).region().w;
-	const int32 h = font(w_text).region().h;
-	font(w_text).draw(Window::Width() - w, Window::Height() - h);
+	const int32 w = status_font(w_text).region().w;
+	const int32 h = status_font(w_text).region().h;
+	status_font.changeOutlineStyle(TextOutlineStyle(Palette::Black, Palette::White, 0.5));
+	status_font(w_text).draw(Window::Width() - w, Window::Height() - h);
 
+}
+
+void check_setting() {
+	std::ifstream ifs("setting.txt");
+	if (!ifs) return;
+
+	std::string line;
+	for (int lnum = 0; std::getline(ifs, line); lnum++) {
+		std::stringstream ss(line);
+		std::string item;
+
+		while (std::getline(ss, item, ',')) {
+			if (lnum == 0 && item != "0") launch_console = true;
+			if (lnum == 1 && item != "0") draw_show_info = true;
+			break;
+		}
+	}
 }
 
 
