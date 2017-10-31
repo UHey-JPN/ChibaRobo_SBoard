@@ -29,7 +29,7 @@ DrawManager::DrawManagerImpl::DrawManagerImpl(std::shared_ptr<ShowStatusManager>
 	m_funcs["r_interview"]	= [&]() { this->drawHome(); };
 	m_funcs["game"]			= [&]() { this->drawGame(); };
 	m_funcs["result"]		= [&]() { this->drawResult(); };
-	m_funcs["vgoal"]		= [&]() { this->drawHome(); };
+	m_funcs["vgoal"]		= [&]() { this->drawVgoal(); };
 	m_funcs["interview"]	= [&]() { this->drawInterview(); };
 
 	home_image.reset(new Texture(L"resource/home.png"));
@@ -87,7 +87,7 @@ void DrawManager::DrawManagerImpl::drawScore(int b_width, int b_height, int b_x,
 	score_pos[1].y = rect_y + rect_h / 2;
 
 	// 得点ボックス用のインスタンス
-	const Rect rect0((int)rect_x, (int)rect_y, (int)rect_w, (int)rect_h);
+	const Rect rect0((int)rect_x, (int)rect_y, (int)rect_w, (int)rect_h);                         
 	const Rect rect1((int)(width - rect_x - rect_w), (int)rect_y, (int)rect_w, (int)rect_h);
 
 	// 得点ボックスの描画
@@ -189,11 +189,17 @@ void DrawManager::DrawManagerImpl::drawResult() {
 
 void DrawManager::DrawManagerImpl::drawInterview() {
 	int t = (int)ssm->getShowTime();
-	if (t > 1000) {
+	if (t > 1000 - 1) {
 		winner_image->scale(Window::Width() / 1920.0).draw();
-	} else if(t > 0) {
-		winner_image->scale(Window::Width() / 1920.0).draw(0,0, Alpha(t*255/1000));
 	} else {
-
+		winner_image->scale(Window::Width() / 1920.0).draw(0,0, Alpha(t*255/1000));
 	}
+}
+
+void DrawManager::DrawManagerImpl::drawVgoal() {
+	if (ssm->getShowTime() < 0) return;
+	
+	
+	score_font[score_font.size() - 1](L"V GOAL").drawCenter(Window::Width() * 0.5, Window::Height() * 0.5);
+
 }

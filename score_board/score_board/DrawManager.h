@@ -45,6 +45,7 @@ public:
 	void drawGame();
 	void drawResult();
 	void drawInterview();
+	void drawVgoal();
 };
 
 
