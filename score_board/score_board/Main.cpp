@@ -35,6 +35,9 @@ void Main() {
 	// デバッグ用のウィンドウ生成
 	if(launch_console) Console::Open();
 
+	Window::SetTitle(L"ChibaRobo Score Board");
+
+
 	while (System::Update()) {
 		if (Input::KeyH.clicked) {
 			ssm->ld.input(std::string("show,home,") + std::to_string(ssm->getCurrentTime() - 175 * 1000) + std::string(",0,0\n"));
