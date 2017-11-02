@@ -16,6 +16,7 @@ void check_setting();
 bool launch_console = false;
 bool draw_show_info = false;
 
+
 //////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////
 //
@@ -60,32 +61,7 @@ void Main() {
 		if (draw_show_info) draw_status_info(ssm);
 	}
 }
-/*/
-void Main() {
-	// ムービー (AVI, WMV)
-	//VideoPlayer video(Dialog::GetOpenVideo().value_or(L"*.avi|*.wmv"));
-	VideoPlayer video(L"resource/opening.avi", false, false);
 
-	if (!video.isOpened()) {
-		MessageBox::Show(L"サポートしていない形式です。");
-		return;
-	}
-
-	//Window::Resize(video.getSize());
-	Window::SetFullscreen(true, Graphics::GetFullScreenSize()[Graphics::GetFullScreenSize().size() - 1]);
-
-	video.setPosFrame(0);
-	video.play();
-
-	while (System::Update()) {
-		video.update();
-
-		video.getFrameTexture().draw();
-
-		Window::SetTitle(L"{:.1f} / {:.1f}"_fmt, video.getPosSec(), video.getLengthSec());
-	}
-}
-//*/
 void draw_status_info(std::shared_ptr<ShowStatusManager> ssm) {
 	static Font status_font(10, Typeface::Medium, FontStyle::Outline);
 	const std::string text = ssm->getStatus() + ","

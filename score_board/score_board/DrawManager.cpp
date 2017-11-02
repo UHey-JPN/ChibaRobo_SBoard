@@ -6,7 +6,8 @@
 
 
 
-DrawManager::DrawManager(std::shared_ptr<ShowStatusManager> ssm) : pImpl(new DrawManagerImpl(ssm)) {
+DrawManager::DrawManager(std::shared_ptr<ShowStatusManager> ssm) : pImpl(new DrawManagerImpl(ssm))
+{
 	current = ssm;
 }
 
@@ -36,21 +37,16 @@ DrawManager::DrawManagerImpl::DrawManagerImpl(std::shared_ptr<ShowStatusManager>
 	result_image.reset(new Texture(L"resource/result_image.png"));
 	winner_image.reset(new Texture(L"resource/winner.png"));
 
-	FontManager::Register(L"resource/GAU_Over_Drive.TTF");
-	FontManager::Register(L"resource/SoukouMincho.ttf");
 	FontManager::Register(L"resource/CAMELIAB.TTF");
 
 	video = VideoPlayer(L"resource/opening.avi", false, false);
 	if (!video.isOpened()) {
 		MessageBox::Show(L"オープニング動画がサポートしていない形式です。(AVI WMV only)");
-		return;
 	}
 
 
 	for (size_t i = 0; i < score_font.size(); i++) {
 		score_font[i] = Font( (int32)((i+1)*3.2), L"Cameliabold" );
-		//score_font[i] = Font( (int32)((i+1)*3.2), L"GauFontOverDrive" );
-		//score_font[i] = Font( (int32)((i+1)*3.2), L"装甲明朝" );
 	}
 
 }
