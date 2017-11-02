@@ -33,6 +33,8 @@ private:
 	std::unique_ptr<Texture> result_image;
 	std::unique_ptr<Texture> winner_image;
 
+	VideoPlayer video;
+
 	std::array<Font, 40> score_font;
 
 public:
@@ -46,6 +48,7 @@ public:
 	void drawResult();
 	void drawInterview();
 	void drawVgoal();
+	void drawOpening();
 };
 
 

@@ -23,7 +23,7 @@ DrawManager::DrawManagerImpl::DrawManagerImpl(std::shared_ptr<ShowStatusManager>
 
 	m_funcs["home"]			= [&]() { this->drawHome(); };
 	m_funcs["preshow"]		= [&]() { this->drawHome(); };
-	m_funcs["opening"]		= [&]() { this->drawHome(); };
+	m_funcs["opening"]		= [&]() { this->drawOpening(); };
 	m_funcs["newgame"]		= [&]() { this->drawHome(); };
 	m_funcs["l_interview"]	= [&]() { this->drawHome(); };
 	m_funcs["r_interview"]	= [&]() { this->drawHome(); };
@@ -39,6 +39,12 @@ DrawManager::DrawManagerImpl::DrawManagerImpl(std::shared_ptr<ShowStatusManager>
 	FontManager::Register(L"resource/GAU_Over_Drive.TTF");
 	FontManager::Register(L"resource/SoukouMincho.ttf");
 	FontManager::Register(L"resource/CAMELIAB.TTF");
+
+	video = VideoPlayer(L"resource/opening.avi", false, false);
+	if (!video.isOpened()) {
+		MessageBox::Show(L"オープニング動画がサポートしていない形式です。(AVI WMV only)");
+		return;
+	}
 
 
 	for (size_t i = 0; i < score_font.size(); i++) {

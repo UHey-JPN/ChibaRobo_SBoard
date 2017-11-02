@@ -164,6 +164,7 @@
   <ItemGroup>
     <ClCompile Include="drawGame.cpp" />
     <ClCompile Include="DrawManager.cpp" />
+    <ClCompile Include="drawOpening.cpp" />
     <ClCompile Include="drawResult.cpp" />
     <ClCompile Include="drawVgoal.cpp" />
     <ClCompile Include="LineDecoder.cpp" />
