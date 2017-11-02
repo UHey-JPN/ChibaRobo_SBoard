@@ -34,6 +34,9 @@ void Main() {
 	if(launch_console) Console::Open();
 
 	while (System::Update()) {
+		if (Input::KeyH.clicked) {
+			ssm->ld.input(std::string("show,home,") + std::to_string(ssm->getCurrentTime() - 175 * 1000) + std::string(",0,0\n"));
+		}
 		if (Input::KeyG.clicked) {
 			ssm->ld.input(std::string("show,game,") + std::to_string(ssm->getCurrentTime() - 175 * 1000) + std::string(",0,0\n"));
 		}
@@ -41,7 +44,7 @@ void Main() {
 			ssm->ld.input(std::string("show,result,") + std::to_string(ssm->getCurrentTime() - 500) + std::string(",0,0\n"));
 		}
 		if (Input::KeyV.clicked) {
-			ssm->ld.input(std::string("show,vgoal,") + std::to_string(ssm->getCurrentTime() - 500) + std::string(",0,0\n"));
+			ssm->ld.input(std::string("show,vgoal,") + std::to_string(ssm->getCurrentTime() + 500) + std::string(",0,0\n"));
 		}
 
 
